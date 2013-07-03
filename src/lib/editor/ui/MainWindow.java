@@ -184,6 +184,7 @@ public class MainWindow extends javax.swing.JFrame {
             //(new AssetManagerWindow(this, true, "", Cst.ALL_ASSET_FORMAT)).setVisible(true);
             AssetManagerWindow window = AssetManagerWindow.getInstance();
             window.setup(true, "", Cst.ALL_ASSET_FORMAT);
+            window.setVisible(true);
         }
     }
     

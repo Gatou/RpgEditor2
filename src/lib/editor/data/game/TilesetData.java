@@ -23,6 +23,7 @@ public class TilesetData extends AbstractData{
     public TilesetData(int id, String name) {
         super(id, name);
         tilesetFilenames = new ArrayList<String>();
+        tilesetFilenames.add("Salut");
     }
     
     public void update(TilesetData oldData){

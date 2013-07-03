@@ -98,17 +98,7 @@ public class DatabasePanel extends AbstractDatabasePanel {
 
         jSplitPane2.setResizeWeight(1.0);
 
-        javax.swing.GroupLayout middlePanelLayout = new javax.swing.GroupLayout(middlePanel);
-        middlePanel.setLayout(middlePanelLayout);
-        middlePanelLayout.setHorizontalGroup(
-            middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 343, Short.MAX_VALUE)
-        );
-        middlePanelLayout.setVerticalGroup(
-            middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 296, Short.MAX_VALUE)
-        );
-
+        middlePanel.setLayout(new javax.swing.BoxLayout(middlePanel, javax.swing.BoxLayout.LINE_AXIS));
         jSplitPane2.setLeftComponent(middlePanel);
 
         rightPanel.setLayout(new javax.swing.BoxLayout(rightPanel, javax.swing.BoxLayout.LINE_AXIS));
@@ -132,7 +122,7 @@ public class DatabasePanel extends AbstractDatabasePanel {
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JPanel leftPanel;
-    private javax.swing.JPanel middlePanel;
+    public javax.swing.JPanel middlePanel;
     private javax.swing.JPanel rightPanel;
     // End of variables declaration//GEN-END:variables
 }

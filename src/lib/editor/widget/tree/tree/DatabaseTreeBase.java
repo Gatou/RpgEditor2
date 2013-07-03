@@ -152,7 +152,7 @@ public abstract class DatabaseTreeBase extends TreeMenu{
             //File file = new File(ProjectMgr.getDataGamePath(), "Map" + dataItem.data.getIdName() + "." + AppMgr.getExtension("data file"));
             data =  (AbstractData) DataMgr.load(file.getAbsolutePath());
             dataItem.data = data; //????????????????????????????????????????????????????????????????????
-            return data;
+            //return data;
             /*
             File file = new File(ProjectMgr.getDataGamePath(), "Map" + dataItem.data.getIdName() + "." + AppMgr.getExtension("data file"));
             data =  (DataBase) DataMgr.load(file.getAbsolutePath());

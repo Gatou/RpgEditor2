@@ -8,13 +8,13 @@ import java.io.File;
 import lib.editor.mgr.Mgr;
 import lib.editor.mgr.ProjectMgr;
 import lib.editor.widget.list.item.ListItem;
-import lib.editor.widget.list.list.List;
+import lib.editor.widget.list.list.AbstractList;
 
 /**
  *
  * @author gaetan
  */
-public class AssetManagerAssetFolderList extends List{
+public class AssetManagerAssetFolderList extends AbstractList{
 
     AssetManagerAssetsTree assetTree;
     

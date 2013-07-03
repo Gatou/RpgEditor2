@@ -4,10 +4,7 @@
  */
 package lib.editor.widget.list.list;
 
-import java.awt.Component;
 import javax.swing.DefaultListModel;
-import javax.swing.JList;
-import javax.swing.ListCellRenderer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import lib.editor.widget.list.item.ListItem;
@@ -17,9 +14,9 @@ import org.jdesktop.swingx.JXList;
  *
  * @author gaetan
  */
-public class List extends JXList{
+public class AbstractList extends JXList{
 
-    public List() {
+    public AbstractList() {
         setCellRenderer(new ListItemRenderer());
         setModel(new DefaultListModel());
         clear();
@@ -72,7 +69,6 @@ public class List extends JXList{
                 setSelectedValue(item, true);
             }
         }
-
     }
     
 }
