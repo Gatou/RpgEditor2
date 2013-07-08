@@ -18,8 +18,9 @@ import lib.editor.widget.graphics.GraphicsView;
  */
 public class MapEditorGraphicsView extends GraphicsView{
 
+    private static MapEditorGraphicsView instance;
+    
     IsoGrid grid;
-    public MapResizeRenderer resizeRenderer;
     final Vector3 camPos = new Vector3();
     public OrthographicCamera camera; 
     MapData data;
@@ -29,10 +30,16 @@ public class MapEditorGraphicsView extends GraphicsView{
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
     
-    public void init(){
-        grid = new IsoGrid(10, 10, Cst.TILE_W, Cst.TILE_H);
-        resizeRenderer = new MapResizeRenderer();
-        refresh(null);
+    public static MapEditorGraphicsView getInstance(){
+        if(instance == null){
+            instance = new MapEditorGraphicsView();
+        }
+        return instance;
+    }
+    
+    public void setup(MapData data){
+        this.data = data;
+        refresh();
     }
     
     public void resize(int width, int height){
@@ -42,11 +49,9 @@ public class MapEditorGraphicsView extends GraphicsView{
     
     public void clear(){
         grid.clear();
-        resizeRenderer.clear();
     }
     
-    public void refresh(MapData data){
-        this.data = data;
+    public void refresh(){
         clear();
         
         if(data == null){
@@ -66,8 +71,7 @@ public class MapEditorGraphicsView extends GraphicsView{
     public void update(){
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         camera.update();
-        grid.update(camera);
-        resizeRenderer.update(camera);
+        //grid.update(camera);
     }
     
 

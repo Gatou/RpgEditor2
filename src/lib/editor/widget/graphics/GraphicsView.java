@@ -9,7 +9,6 @@ package lib.editor.widget.graphics;
  * @author gaetan
  */
 import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglCanvas;
 
 

@@ -39,7 +39,7 @@ public class MapEditorApp  implements ApplicationListener, InputProcessor {
     @Override
     public void resize(int width, int height) {
       Gdx.gl.glViewport(0, 0, width, height);
-      WidgetMgr.MAP_EDITOR.resize(width, height);
+      MapEditorGraphicsView.getInstance().resize(width, height);
       WindowMgr.resize(width, height);
       //spriteBatch.getProjectionMatrix().setToOrtho(0, width, height, 0, 0, 1);
 
@@ -48,7 +48,7 @@ public class MapEditorApp  implements ApplicationListener, InputProcessor {
 
     @Override
     public void render() {
-        WidgetMgr.MAP_EDITOR.update();
+        MapEditorGraphicsView.getInstance().update();
         WindowMgr.update();
     }
 
@@ -94,7 +94,7 @@ public class MapEditorApp  implements ApplicationListener, InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        OrthographicCamera camera = WidgetMgr.MAP_EDITOR.camera;
+        OrthographicCamera camera = MapEditorGraphicsView.getInstance().camera;
         
         if(Gdx.input.isButtonPressed(Input.Buttons.RIGHT)){
 
@@ -109,7 +109,7 @@ public class MapEditorApp  implements ApplicationListener, InputProcessor {
 
                 }
                 last.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-                WidgetMgr.MAP_EDITOR.camPos.set(camera.position);
+                MapEditorGraphicsView.getInstance().camPos.set(camera.position);
         }
         return false;
     }

@@ -5,14 +5,21 @@
 package lib.editor.ui.data.map;
 
 import lib.editor.data.game.AbstractData;
-import lib.editor.data.game.MapData;
 import lib.editor.ui.data.DatabasePanel;
+import lib.editor.widget.mapeditor.MapEditorGraphicsView;
 
 /**
  *
  * @author gaetan
  */
 public class MapPanel extends DatabasePanel{
+    
+
+    public MapPanel() {
+        MapEditorGraphicsView mapEditor = MapEditorGraphicsView.getInstance();
+        middlePanel.add(mapEditor.getCanvas());
+    }
+    
     
     //public void setup(String dataName, DataMa){
     //    super.setup(dataName, );
