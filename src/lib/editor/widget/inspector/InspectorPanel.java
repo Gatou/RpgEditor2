@@ -8,14 +8,13 @@ import javax.swing.JPanel;
 import lib.editor.data.game.AbstractData;
 import lib.editor.mgr.Mgr;
 import lib.editor.ui.data.AbstractDatabasePanel;
-import lib.editor.ui.data.DatabasePanel;
 import org.jdesktop.swingx.JXTaskPane;
 
 /**
  *
  * @author gaetan
  */
-public abstract class InspectorPanel extends JPanel{
+public abstract class InspectorPanel extends JPanel implements IInspectorPanel{
     
     public static final int LEFT_COLUMN_WIDTH = 70;
     
@@ -43,8 +42,6 @@ public abstract class InspectorPanel extends JPanel{
         
     }
 
-    public void refresh(){
-    }
     
     /*
     public void setVisible(boolean visible, AbstractData data){
@@ -81,7 +78,7 @@ public abstract class InspectorPanel extends JPanel{
         super.setVisible(visible);
     }*/
 
-    void setup(AbstractDatabasePanel dataPanel, AbstractData data) {
+    public void setup(AbstractDatabasePanel dataPanel, AbstractData data) {
         this.dataPanel = dataPanel;
         this.data = data;
     }

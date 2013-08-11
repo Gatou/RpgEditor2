@@ -14,10 +14,13 @@ import lib.editor.widget.mapeditor.MapEditorGraphicsView;
  */
 public class MapPanel extends DatabasePanel{
     
-
+    SceneTree sceneTree;
+    
     public MapPanel() {
         MapEditorGraphicsView mapEditor = MapEditorGraphicsView.getInstance();
         middlePanel.add(mapEditor.getCanvas());
+        
+        sceneTree = new SceneTree();
     }
     
     

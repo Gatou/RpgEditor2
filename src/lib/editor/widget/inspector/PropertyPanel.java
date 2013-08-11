@@ -26,7 +26,7 @@ public class PropertyPanel extends InspectorPanel {
     }
 
     @Override
-    void setup(AbstractDatabasePanel dataPanel, AbstractData data) {
+    public void setup(AbstractDatabasePanel dataPanel, AbstractData data) {
         super.setup(dataPanel, data);
         
         nameTextField.getDocument().addDocumentListener(new DocumentListener(){  
@@ -45,6 +45,7 @@ public class PropertyPanel extends InspectorPanel {
         textPanel.setPreferredSize(new Dimension(LEFT_COLUMN_WIDTH, getComponentCount()*28));
     }
     
+    @Override
     public void refresh(){
         refreshing = true;
         idLabel.setText(String.valueOf(data.id));
