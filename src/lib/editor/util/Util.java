@@ -5,7 +5,7 @@
 package lib.editor.util;
 
 import java.io.File;
-import lib.editor.mgr.ProjectMgr;
+import lib.editor.mgr.ProjectManager;
 
 /**
  *

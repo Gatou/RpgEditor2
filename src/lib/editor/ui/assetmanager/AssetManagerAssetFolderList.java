@@ -5,8 +5,8 @@
 package lib.editor.ui.assetmanager;
 
 import java.io.File;
-import lib.editor.mgr.Mgr;
-import lib.editor.mgr.ProjectMgr;
+import lib.editor.mgr.IconManager;
+import lib.editor.mgr.ProjectManager;
 import lib.editor.widget.list.item.ListItem;
 import lib.editor.widget.list.list.AbstractList;
 
@@ -25,9 +25,9 @@ public class AssetManagerAssetFolderList extends AbstractList{
     public void refresh(){
         clear();
         
-        File assetsFolder = new File(ProjectMgr.getAssetsPath());
+        File assetsFolder = new File(ProjectManager.getAssetsPath());
         for (String name : assetsFolder.list()) {
-            addItem(new ListItem(name, Mgr.icon.getSystemIcon("folder.png", false)));
+            addItem(new ListItem(name, IconManager.instance().getSystemIcon("folder.png", false)));
         }
     }
     

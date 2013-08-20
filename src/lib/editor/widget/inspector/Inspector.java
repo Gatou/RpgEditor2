@@ -4,8 +4,11 @@
  */
 package lib.editor.widget.inspector;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.util.List;
+import javax.swing.JScrollPane;
+import javax.swing.border.EmptyBorder;
 import lib.editor.data.game.AbstractData;
 import lib.editor.ui.data.AbstractDatabasePanel;
 import org.jdesktop.swingx.JXTaskPaneContainer;
@@ -33,6 +36,7 @@ public class Inspector {
         return rightInspector;
     }
     
+    public JScrollPane scrollPane;
     public JXTaskPaneContainer container;
     //public AbstractDatabasePanel dataPanel;
     List<InspectorPanel> panels;
@@ -41,9 +45,15 @@ public class Inspector {
     
     private Inspector(JXTaskPaneContainer container){
         this.container = container;
-        container.setPreferredSize(new Dimension(240, 0));
-        container.setMinimumSize(container.getPreferredSize());
-         
+        this.scrollPane = new JScrollPane(container);
+        
+        scrollPane.setBorder(new EmptyBorder(0,0,0,0));
+        
+        container.setBorder(new EmptyBorder(6, 6, 6, 6));
+        //container.setBackground(Color.red);
+        //scrollPane.setViewportView(container);
+        scrollPane.setPreferredSize(new Dimension(240, 0));
+        //container.setMinimumSize(new Dimension(240, 240));
         //panels = new Hashtable<String, InspectorPanel>();
         //panels.put("property", new PropertyPanel(container));
         //panels.put("map", new MapSizePanel(container));

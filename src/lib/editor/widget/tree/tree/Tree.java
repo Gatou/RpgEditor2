@@ -9,25 +9,15 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
-import javax.swing.JTree;
 import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeExpansionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-import javax.swing.event.TreeWillExpandListener;
-import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.ExpandVetoException;
-import javax.swing.tree.TreeModel;
-import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
-import lib.editor.widget.tree.item.TreeItemData;
 import lib.editor.widget.tree.item.TreeItem;
 import org.jdesktop.swingx.JXTree;
 
@@ -106,12 +96,17 @@ public abstract class Tree extends JXTree{
         //improve item selection (click is detected on all the row of the iem)
         
         MouseListener ml = new MouseAdapter() {
+            /*public void mouseClicked(MouseEvent e){
+                System.out.println(getSelectionRows()[0]);
+                //if(getCurrentItem() == getClosestPathForLocation(WIDTH, WIDTH))
+                currentItemChanged(getCurrentItem());
+            }*/
+
             public void mousePressed(MouseEvent e) {
-         
+                
                 if(e.getY() > getRowHeight()*getRowCount()){
                     return;
                 }
-                
                 
                 int selRow = getClosestRowForLocation( e.getX(), e.getY());
                 

@@ -4,13 +4,12 @@
  */
 package lib.editor.widget.tree.tree;
 
-import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JTree;
 import javax.swing.UIManager;
 import javax.swing.tree.DefaultTreeCellRenderer;
-import lib.editor.mgr.Mgr;
+import lib.editor.mgr.IconManager;
 import lib.editor.widget.tree.item.TreeItem;
 
 /**
@@ -46,11 +45,11 @@ public class TreeItemRenderer extends DefaultTreeCellRenderer{
         }
         
         if(item.isEnabled()){
-            label.setIcon(Mgr.icon.getSystemIcon(item.getIconFilename(), false));
+            label.setIcon(IconManager.instance().getSystemIcon(item.getIconFilename(), false));
         }
         else{
             label.setForeground(UIManager.getColor("Item.disableText"));
-            label.setIcon(Mgr.icon.getSystemIcon(item.getIconFilename(), true));
+            label.setIcon(IconManager.instance().getSystemIcon(item.getIconFilename(), true));
         }
         
         return label;

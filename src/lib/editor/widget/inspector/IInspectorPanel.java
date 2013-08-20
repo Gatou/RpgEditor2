@@ -13,7 +13,7 @@ import lib.editor.ui.data.AbstractDatabasePanel;
  */
 public interface IInspectorPanel {
     
-    void setup(AbstractDatabasePanel dataPanel, AbstractData data);
+    public void setup(AbstractDatabasePanel dataPanel, AbstractData data);
     public void refresh();
     
 }

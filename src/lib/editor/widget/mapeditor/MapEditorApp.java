@@ -14,6 +14,9 @@ import com.badlogic.gdx.math.Plane;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 import lib.editor.mgr.WindowMgr;
+import lib.editor.widget.mapeditor.tools.SelectTool;
+import lib.game.scene.GameObject;
+import lib.game.scene.GraphicsScene;
 
 /**
  *
@@ -34,12 +37,14 @@ public class MapEditorApp  implements ApplicationListener, InputProcessor {
         
         Gdx.input.setInputProcessor(this);
         Gdx.graphics.getGL20().glClearColor(0.4f, 0.4f, 0.4f, 1);
+        
+        MapEditorGraphicsView.instance().scene = new GraphicsScene();
     }
 
     @Override
     public void resize(int width, int height) {
       Gdx.gl.glViewport(0, 0, width, height);
-      MapEditorGraphicsView.getInstance().resize(width, height);
+      MapEditorGraphicsView.instance().resize(width, height);
       WindowMgr.resize(width, height);
       //spriteBatch.getProjectionMatrix().setToOrtho(0, width, height, 0, 0, 1);
 
@@ -48,7 +53,7 @@ public class MapEditorApp  implements ApplicationListener, InputProcessor {
 
     @Override
     public void render() {
-        MapEditorGraphicsView.getInstance().update();
+        MapEditorGraphicsView.instance().update();
         WindowMgr.update();
     }
 
@@ -94,7 +99,7 @@ public class MapEditorApp  implements ApplicationListener, InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        OrthographicCamera camera = MapEditorGraphicsView.getInstance().camera;
+        OrthographicCamera camera = MapEditorGraphicsView.instance().scene.getCamera();
         
         if(Gdx.input.isButtonPressed(Input.Buttons.RIGHT)){
 
@@ -109,16 +114,19 @@ public class MapEditorApp  implements ApplicationListener, InputProcessor {
 
                 }
                 last.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-                MapEditorGraphicsView.getInstance().camPos.set(camera.position);
+                MapEditorGraphicsView.instance().camPos.set(camera.position);
         }
         return false;
     }
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
+        //SelectTool.instance().hit(screenX, screenY);
         return false;
     }
 
+
+    
     @Override
     public boolean scrolled(int amount) {
         return false;

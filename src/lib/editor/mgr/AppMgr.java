@@ -68,7 +68,7 @@ public class AppMgr {
                 prop.load(new FileInputStream(iniFile));
 
                 if(!prop.getProperty("last project path").equals("")){
-                    ProjectMgr.openProject(prop.getProperty("last project path"));
+                    ProjectManager.openProject(prop.getProperty("last project path"));
                 }
 
              }
@@ -95,11 +95,11 @@ public class AppMgr {
             Properties prop = new Properties();
             
             //Memorize last opened project
-            if(ProjectMgr.getProjectPath() == null){
+            if(ProjectManager.getProjectPath() == null){
                 prop.setProperty("last project path", "");
             }
             else{
-                prop.setProperty("last project path", ProjectMgr.getProjectPath());
+                prop.setProperty("last project path", ProjectManager.getProjectPath());
             }
            
             prop.store(new FileOutputStream(iniFile), AppMgr.getNameVersion() + " main settings");

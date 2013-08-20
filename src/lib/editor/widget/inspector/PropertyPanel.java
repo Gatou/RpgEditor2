@@ -8,7 +8,6 @@ import java.awt.Dimension;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import lib.editor.data.game.AbstractData;
-import lib.editor.mgr.SaveMgr;
 import lib.editor.ui.data.AbstractDatabasePanel;
 import lib.editor.ui.data.DatabasePanel;
 import static lib.editor.widget.inspector.InspectorPanel.LEFT_COLUMN_WIDTH;
@@ -19,12 +18,20 @@ import static lib.editor.widget.inspector.InspectorPanel.LEFT_COLUMN_WIDTH;
  */
 public class PropertyPanel extends InspectorPanel {
     
+    private static PropertyPanel instance;
     
-    public PropertyPanel(Inspector inspector) {
-        super(inspector, "Properties", "project_root.png");
+    private PropertyPanel() {
+        super("Properties", "properties.png");
         initComponents();
     }
 
+    public static PropertyPanel instance(){
+        if(instance == null){
+            instance = new PropertyPanel();
+        }
+        return instance;
+    }
+    
     @Override
     public void setup(AbstractDatabasePanel dataPanel, AbstractData data) {
         super.setup(dataPanel, data);
@@ -58,6 +65,8 @@ public class PropertyPanel extends InspectorPanel {
             }
         }*/
         refreshing = false;
+        
+        //nameTextField.setEditable(((DatabasePanel)dataPanel).getCurrentNamableData() != null);
     }
     
     public void focusNameTextField(){
@@ -75,9 +84,9 @@ public class PropertyPanel extends InspectorPanel {
     public void dataNameChanged(String name){
         //currentMapEdited();
         //DataMap gameData = (DataMap) getCurrentGameData();
-        AbstractData data = ((DatabasePanel)dataPanel).getCurrentData();
+        AbstractData data = ((DatabasePanel)dataPanel).getCurrentNamableData();
         
-        System.out.println(data.name + " " + name);
+        //System.out.println(data.name + " " + name);
         
         if(name.equals(data.name)){ 
             return;
@@ -86,7 +95,7 @@ public class PropertyPanel extends InspectorPanel {
         AbstractData editorData = ((DatabasePanel)dataPanel).databaseTree.getCurrentEditorData();
         data.name = name;
         editorData.name = name;
-        ((DatabasePanel)dataPanel).databaseTree.getCurrentItem().setText(name);
+        ((DatabasePanel)dataPanel).getCurrentItem().setText(name);
         
         ((DatabasePanel)dataPanel).currentDataModified();
         //SaveMgr.requestSaveEnabled();
@@ -109,8 +118,11 @@ public class PropertyPanel extends InspectorPanel {
         idLabel = new javax.swing.JLabel();
         nameTextField = new javax.swing.JTextField();
 
+        setBackground(new java.awt.Color(255, 51, 102));
+        setOpaque(false);
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
 
+        textPanel.setOpaque(false);
         textPanel.setLayout(new java.awt.GridLayout(0, 1));
 
         jLabel2.setText("ID");
@@ -121,6 +133,7 @@ public class PropertyPanel extends InspectorPanel {
 
         add(textPanel);
 
+        jPanel2.setOpaque(false);
         jPanel2.setLayout(new java.awt.GridLayout(0, 1));
 
         idLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);

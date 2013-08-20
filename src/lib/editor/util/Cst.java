@@ -13,6 +13,8 @@ import java.util.List;
  */
 public class Cst {
     
+    public static final long serialVersionUID = 42L;
+        
     public static final List<String> VALID_IMAGE_FORMAT = new ArrayList<String>() {{
         add("png"); add("jpg"); add("bmp");
     }};

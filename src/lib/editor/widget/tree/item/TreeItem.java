@@ -4,13 +4,8 @@
  */
 package lib.editor.widget.tree.item;
 
-import java.awt.Image;
-import javax.swing.GrayFilter;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import lib.editor.mgr.Mgr;
 import lib.editor.widget.tree.tree.Tree;
 
 /**

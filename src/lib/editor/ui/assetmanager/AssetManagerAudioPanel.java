@@ -9,7 +9,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import java.io.File;
-import lib.editor.mgr.ProjectMgr;
+import lib.editor.mgr.ProjectManager;
 import lib.editor.widget.tree.item.FilePathTreeItem;
 
 /**

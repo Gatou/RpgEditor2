@@ -32,8 +32,8 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import lib.editor.data.DataInfos;
 import lib.editor.mgr.AppMgr;
-import lib.editor.mgr.Mgr;
-import lib.editor.mgr.ProjectMgr;
+import lib.editor.mgr.IconManager;
+import lib.editor.mgr.ProjectManager;
 import lib.editor.mgr.SaveMgr;
 import lib.editor.ui.data.AbstractDatabasePanel;
 import lib.editor.ui.data.DatabasePanel;
@@ -148,14 +148,14 @@ public class MainWindow extends javax.swing.JFrame {
         if(result != null){
             String projectPath = result.getParent();
             if(projectPath != null){
-                ProjectMgr.openProject(projectPath);
+                ProjectManager.openProject(projectPath);
             }
         }
     }
     
     private void exit(){
         AppMgr.saveSettings();
-        ProjectMgr.closeProject();
+        ProjectManager.closeProject();
         dispose();
     }
     
@@ -195,8 +195,8 @@ public class MainWindow extends javax.swing.JFrame {
         Gson gson = new Gson();
         List<DataInfos> dataInfosList = null;
         try {
-            System.out.println(ProjectMgr.getProjectPath());
-            String path = new File(ProjectMgr.getProjectPath(), "Data/data.properties").getAbsolutePath();
+            //System.out.println(ProjectManager.getProjectPath());
+            String path = new File(ProjectManager.getProjectPath(), "Data/data.properties").getAbsolutePath();
             
             Type listOfTestObject = new TypeToken<List<DataInfos>>(){}.getType();
             dataInfosList = gson.fromJson(new FileReader(path), listOfTestObject);
@@ -212,7 +212,7 @@ public class MainWindow extends javax.swing.JFrame {
             JPanel panelkaka = new JPanel();
             panelkaka.setLayout(new javax.swing.BoxLayout(panelkaka, javax.swing.BoxLayout.LINE_AXIS));
         
-            ImageIcon icon = Mgr.icon.getSystemIcon("copy.png", false);
+            ImageIcon icon = IconManager.instance().getTabIcon(dataInfos.icon_filename, false);
             mainTabbedPane.addTab(dataInfos.name, icon, panelkaka, "Does nothing");
             
             Class<?> dataClass = null;
@@ -239,7 +239,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
             
             DatabasePanel panel = (DatabasePanel) object;
-            panel.setup(dataInfos.name, dataClass);
+            panel.setup(dataInfos.name, dataInfos.icon_filename, dataClass);
             panelkaka.add(panel);
             dataPanels.put(dataInfos.name, panel);
         }
@@ -528,7 +528,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_fileOpenActionPerformed
 
     private void fileCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileCloseActionPerformed
-        ProjectMgr.closeProject();
+        ProjectManager.closeProject();
     }//GEN-LAST:event_fileCloseActionPerformed
 
     private void fileExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileExitActionPerformed
@@ -546,7 +546,7 @@ public class MainWindow extends javax.swing.JFrame {
   
     private void menuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem1ActionPerformed
         try {
-            Desktop.getDesktop().open(new File(ProjectMgr.getProjectPath()));
+            Desktop.getDesktop().open(new File(ProjectManager.getProjectPath()));
         } catch (IOException ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }

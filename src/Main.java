@@ -1,4 +1,11 @@
-
+/*
+ * Probeme pour afficher l'inspector d'une map deja selectionner (l'inspector de la map a changer vu qu'on a
+ * cliquer sur un node de la scene). Il faudrait pouvoir declecnher l'inspector quand on clique sur un item deja
+ * selectionner. mais attention a ne pas rafrachier 2 fois l'inspector a cause de ça
+ * 
+ * Trouver un autre moyen pour sauvegarder les gameObject car actuellement c pas cool
+ * + ça n'instancie pas les variable transient quand deserialization
+ */
 import java.awt.EventQueue;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;

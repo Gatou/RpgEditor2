@@ -16,7 +16,7 @@ import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeExpansionListener;
 import lib.editor.data.editor.DataEditorPackage;
 import lib.editor.mgr.DataMgr;
-import lib.editor.mgr.ProjectMgr;
+import lib.editor.mgr.ProjectManager;
 import lib.editor.widget.tree.item.TreeItemData;
 import lib.editor.widget.tree.item.FilePathTreeItem;
 import lib.editor.widget.tree.item.TreeItem;
@@ -53,7 +53,7 @@ public class TreeExpandMemorizer {
     }
     
     public void save(String name){
-        File file = new File(ProjectMgr.getSettingsPath(), name);
+        File file = new File(ProjectManager.getSettingsPath(), name);
         if(!file.exists()){
             try {
                 file.createNewFile();
@@ -65,7 +65,7 @@ public class TreeExpandMemorizer {
     }
     
     public void load(String name){
-        File file = new File(ProjectMgr.getSettingsPath(), name);
+        File file = new File(ProjectManager.getSettingsPath(), name);
         if(file.exists()){
             expanded = (Map<String, Boolean>) DataMgr.load(file.getAbsolutePath());
         }
@@ -76,7 +76,7 @@ public class TreeExpandMemorizer {
         List<String> unuseds = new ArrayList<String>();
         
         for(String path : expanded.keySet()){
-            if(! new File(ProjectMgr.getAssetsPath(), path).exists()){
+            if(! new File(ProjectManager.getAssetsPath(), path).exists()){
                 unuseds.add(path);
             }
         }

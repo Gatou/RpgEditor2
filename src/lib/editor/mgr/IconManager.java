@@ -5,34 +5,39 @@
 package lib.editor.mgr;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 import java.util.Hashtable;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.GrayFilter;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 /**
  *
  * @author gaetan
  */
-public class IconMgr {
+public class IconManager {
     
+    private static IconManager instance;
     public final String SYSTEM_PATH = "/assets/icons/";
     public final String TAB_PATH = "/assets/tab/";
+    public final String COMPONENT_PATH = "/assets/component/";
     
     //private Map<String, String> icons;
     private Map<String, ImageIcon> cache;
     
-    public IconMgr() {
+    private IconManager() {
         cache = new Hashtable<String, ImageIcon>();
         //addIconExtension("png", "png.png");
+    }
+    
+    public static IconManager instance(){
+        if(instance == null){
+            instance = new IconManager();
+        }
+        return instance;
+    }
+    
+    public ImageIcon getComponentIcon(String filename, boolean disabledVersion) { 
+        return getIcon(COMPONENT_PATH, filename, disabledVersion);
     }
     
     public ImageIcon getTabIcon(String filename, boolean disabledVersion) { 

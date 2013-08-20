@@ -23,10 +23,13 @@ public class DatabasePanel extends AbstractDatabasePanel {
     public DatabasePanel() {
         initComponents();
         databaseTree.setDataPanel(this);
+        
+        //rightPanel.setBackground(Color.cyan);
+        //rightPanel.setBorder(new EmptyBorder(0, 0,0,0));
     }
     
-    public void setup(String dataName, Class dataClass){
-        databaseTree.setup(this, dataName, dataClass);
+    public void setup(String dataName, String iconFilename, Class dataClass){
+        databaseTree.setup(this, dataName, iconFilename, dataClass);
     }
     
     public void dataChanged(AbstractData data){
@@ -50,7 +53,7 @@ public class DatabasePanel extends AbstractDatabasePanel {
     public void selected(){
         dataChanged(getCurrentData());
         getRightPanel().removeAll();
-        getRightPanel().add(Inspector.getRightInspector().container);
+        getRightPanel().add(Inspector.getRightInspector().scrollPane);
     }
     
     public AbstractData getCurrentData(){
@@ -59,8 +62,11 @@ public class DatabasePanel extends AbstractDatabasePanel {
     
     @Override
     public void currentDataModified(){
+        //System.out.println(databaseTree.modifiedItems.size());
         if(databaseTree.getCurrentItem() instanceof TreeItemData){
-            databaseTree.modifiedItems.add((TreeItemData) databaseTree.getCurrentItem());
+            if(!databaseTree.modifiedItems.contains(databaseTree.getCurrentItem())){
+                databaseTree.modifiedItems.add((TreeItemData) databaseTree.getCurrentItem());
+            }
         }
         super.currentDataModified();
     }
@@ -106,7 +112,7 @@ public class DatabasePanel extends AbstractDatabasePanel {
 
         jSplitPane1.setRightComponent(jSplitPane2);
 
-        leftPanel.setLayout(new javax.swing.BoxLayout(leftPanel, javax.swing.BoxLayout.LINE_AXIS));
+        leftPanel.setLayout(new javax.swing.BoxLayout(leftPanel, javax.swing.BoxLayout.PAGE_AXIS));
 
         jScrollPane1.setViewportView(databaseTree);
 
@@ -121,8 +127,16 @@ public class DatabasePanel extends AbstractDatabasePanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
-    private javax.swing.JPanel leftPanel;
+    public javax.swing.JPanel leftPanel;
     public javax.swing.JPanel middlePanel;
     private javax.swing.JPanel rightPanel;
     // End of variables declaration//GEN-END:variables
+
+    public AbstractData getCurrentNamableData() {
+        return getCurrentData();
+    }
+    
+    public TreeItem getCurrentItem() {
+        return databaseTree.getCurrentItem();
+    }
 }

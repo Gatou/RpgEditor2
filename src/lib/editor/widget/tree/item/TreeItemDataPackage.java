@@ -52,9 +52,9 @@ public class TreeItemDataPackage extends TreeItemDataBase{
     
     @Override
     public void removeChild(TreeItem item){
-        System.out.println("Removed id: " + item.getText());
+        //System.out.println("Removed id: " + item.getText());
         ((DataEditorPackage)editorData).children.remove(((TreeItemDataBase)item).editorData);
-        System.out.println(((DataEditorPackage)editorData).children.size());
+        //System.out.println(((DataEditorPackage)editorData).children.size());
         /*
         System.out.println(((TreeItemDataBase)item).editorData.id);
         for(AbstractData data : ((DataEditorPackage)editorData).children){

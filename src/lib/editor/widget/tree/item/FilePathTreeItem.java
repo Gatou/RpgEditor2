@@ -6,7 +6,7 @@ package lib.editor.widget.tree.item;
 
 import java.io.File;
 import javax.swing.ImageIcon;
-import lib.editor.mgr.ProjectMgr;
+import lib.editor.mgr.ProjectManager;
 import lib.editor.widget.tree.tree.Tree;
 
 /**

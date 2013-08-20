@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import lib.editor.mgr.AppMgr;
-import lib.editor.mgr.ProjectMgr;
+import lib.editor.mgr.ProjectManager;
 import lib.editor.ui.Dialog;
 import lib.editor.ui.MainWindow;
 import lib.editor.util.Cst;
@@ -270,8 +270,8 @@ public class AssetManagerWindow extends Dialog {
     }
     
     public void saveSettings(){
-        if(ProjectMgr.isProjectOpen()){
-            Properties prop = ProjectMgr.getProperties();
+        if(ProjectManager.isProjectOpen()){
+            Properties prop = ProjectManager.getProperties();
             String prefix = "AssetManagerWindow_";
             SwingUtil.saveWindowBasics(prop, prefix, this);
             prop.setProperty(prefix + "LeftSplitPane", String.valueOf(leftSplitPane.getDividerLocation()));
@@ -281,7 +281,7 @@ public class AssetManagerWindow extends Dialog {
     }
     
     public void loadSettings(){
-        Properties prop = ProjectMgr.getProperties();
+        Properties prop = ProjectManager.getProperties();
         String prefix = "AssetManagerWindow_";
         SwingUtil.loadWindowBasics(prop, prefix, this);
         try{
@@ -309,11 +309,11 @@ public class AssetManagerWindow extends Dialog {
     }
     
     public void setCurrentPath(String relativePath){
-        File file = new File(ProjectMgr.getAssetsPath() ,relativePath);
+        File file = new File(ProjectManager.getAssetsPath() ,relativePath);
         
         if(!file.exists()){return;}
         
-        while(file.getParent() != null && !file.getParent().equals(ProjectMgr.getAssetsPath())){
+        while(file.getParent() != null && !file.getParent().equals(ProjectManager.getAssetsPath())){
             file = file.getParentFile();
         }
         String folder = file.getName();
@@ -344,7 +344,7 @@ public class AssetManagerWindow extends Dialog {
             return false;
         }
         
-        File file = new File(ProjectMgr.getAssetsPath(), relativePath);
+        File file = new File(ProjectManager.getAssetsPath(), relativePath);
         
         if(file.isDirectory()){
             return false;
@@ -377,7 +377,7 @@ public class AssetManagerWindow extends Dialog {
 
         //boolean isSound = folderList.getCurrentItem().getText().equals("Sounds");
         
-        File file = new File(ProjectMgr.getAssetsPath(), relativePath);
+        File file = new File(ProjectManager.getAssetsPath(), relativePath);
         
         String ext = FilenameUtils.getExtension(file.getName());
         

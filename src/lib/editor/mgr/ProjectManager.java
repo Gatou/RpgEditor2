@@ -24,8 +24,9 @@ import lib.editor.util.ProjectError;
  *
  * @author gaetan
  */
-public class ProjectMgr {
+public class ProjectManager {
     
+    private static ProjectManager instance;
     private static Properties properties;
     
     public static final String[] assetsFolders = {"Scripts", "Animations", "Sounds", "Characters", "Tiles",
@@ -33,6 +34,17 @@ public class ProjectMgr {
     private static List<String> allPath = new ArrayList<String>();
     private static String projectPath, assetsPath, settingsPath, dataPath;
     //private static String ;
+
+    //private static String ;
+    private ProjectManager() {
+    }
+    
+    public static ProjectManager instance(){
+        if(instance == null){
+            instance = new ProjectManager();
+        }
+        return instance;
+    }
     
     public static String getProjectPath(){
         return projectPath;
@@ -86,7 +98,7 @@ public class ProjectMgr {
               out.write(AppMgr.getNameVersion());
               out.close();
         } catch (IOException ex) {
-            Logger.getLogger(ProjectMgr.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProjectManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         openProject(projectPath);
@@ -188,14 +200,14 @@ public class ProjectMgr {
     }
     
     public static File getPropertiesFile(){        
-        File settingsFolder = new File(ProjectMgr.getSettingsPath());
+        File settingsFolder = new File(ProjectManager.getSettingsPath());
         if(!settingsFolder.exists()){
             settingsFolder.mkdir();
         }
         
-        File iniFile = new File(ProjectMgr.getSettingsPath(), "settings." + AppMgr.getExtension("settings file"));
+        File iniFile = new File(ProjectManager.getSettingsPath(), "settings." + AppMgr.getExtension("settings file"));
         if(!iniFile.exists()){
-            try {iniFile.createNewFile();} catch (IOException ex) {Logger.getLogger(ProjectMgr.class.getName()).log(Level.SEVERE, null, ex);}
+            try {iniFile.createNewFile();} catch (IOException ex) {Logger.getLogger(ProjectManager.class.getName()).log(Level.SEVERE, null, ex);}
         }
         return iniFile;
     }

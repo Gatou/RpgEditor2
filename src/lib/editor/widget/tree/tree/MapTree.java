@@ -207,26 +207,26 @@ public class MapTree extends DatabaseTree {
     
     
     public void copy(){
-        checkEnabledMenuAction();
+        //checkEnabledMenuAction();
         if(!copyItem.isEnabled()){ return; }
         
         TransferMgr.copyEditorData(getCurrentData());
         TransferMgr.copyGameData(getCurrentData());
         
-        checkEnabledMenuAction();
+        //checkEnabledMenuAction();
     }
     
     public void paste(){
-        checkEnabledMenuAction();
+        //checkEnabledMenuAction();
         if(!pasteItem.isEnabled()){ return; }
         
         newMap(true);
                 
-        checkEnabledMenuAction();
+        //checkEnabledMenuAction();
     }
     
     public void delete(){
-        checkEnabledMenuAction();
+        //checkEnabledMenuAction();
         if(!deleteItem.isEnabled()){ return; }
         
         TreeItem item = getCurrentItem();
@@ -251,7 +251,7 @@ public class MapTree extends DatabaseTree {
         //if(parentItem.ch)
         //setCurrentItem(rootItem);
         
-        checkEnabledMenuAction();
+        //checkEnabledMenuAction();
         
         SaveMgr.requestSaveEnabled();
     }

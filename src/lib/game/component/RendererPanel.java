@@ -2,26 +2,31 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package lib.editor.widget.inspector;
+package lib.game.component;
 
 import lib.editor.data.game.AbstractData;
-import lib.editor.data.game.MapData;
 import lib.editor.ui.data.AbstractDatabasePanel;
+import lib.editor.widget.inspector.InspectorPanel;
 
 /**
  *
  * @author Gaetan
  */
-public class MapScenePanel extends InspectorPanel  {
+public class RendererPanel extends InspectorPanel {
 
-    /**
-     * Creates new form MapScenePanel
-     */
-    public MapScenePanel(Inspector inspector) {
-        super(inspector, "Scene", "project_root.png");
+    private static RendererPanel instance;
+    
+    private RendererPanel() {
+        super("Renderer", "renderer.png");
         initComponents();
     }
 
+    public static RendererPanel instance(){
+        if(instance == null){
+            instance = new RendererPanel();
+        }
+        return instance;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,31 +36,27 @@ public class MapScenePanel extends InspectorPanel  {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        sceneTree = new lib.editor.ui.data.map.SceneTree();
-
-        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
-
-        jScrollPane1.setViewportView(sceneTree);
-
-        add(jScrollPane1);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
-    private lib.editor.ui.data.map.SceneTree sceneTree;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void setup(AbstractDatabasePanel dataPanel, AbstractData data) {
         super.setup(dataPanel, data);
         
-        MapData mapData = (MapData) data;
-        sceneTree.setup(mapData.layers);
     }
     
     @Override
     public void refresh() {
-        sceneTree.refresh();
     }
-    
 }

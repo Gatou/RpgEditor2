@@ -3,7 +3,7 @@ package lib.editor.data.game;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JPanel;
+import lib.editor.util.Cst;
 import lib.editor.widget.inspector.Inspector;
 import lib.editor.widget.inspector.InspectorPanel;
 import lib.editor.widget.inspector.PropertyPanel;
@@ -39,7 +39,11 @@ public class AbstractData implements Serializable{
     
     public List<InspectorPanel> createInspectorPanels(){
         List<InspectorPanel> panels = new ArrayList<InspectorPanel>();
-        panels.add(new PropertyPanel(Inspector.getRightInspector()));
+        
+        PropertyPanel panel = PropertyPanel.instance();
+        panel.setInspector(Inspector.getRightInspector());
+        panels.add(panel);
+        
         return panels;
     }
     

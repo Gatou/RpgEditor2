@@ -11,9 +11,10 @@ import javax.swing.tree.TreePath;
 import lib.editor.data.DataInfos;
 import lib.editor.data.editor.DataEditorPackage;
 import lib.editor.data.game.AbstractData;
+import lib.editor.data.game.MapData;
 import lib.editor.mgr.AppMgr;
 import lib.editor.mgr.DataMgr;
-import lib.editor.mgr.ProjectMgr;
+import lib.editor.mgr.ProjectManager;
 import lib.editor.ui.data.DatabasePanel;
 import lib.editor.widget.tree.item.TreeItemData;
 import lib.editor.widget.tree.item.TreeItem;
@@ -29,7 +30,7 @@ public abstract class DatabaseTreeBase extends TreeMenu{
     public DatabasePanel dataPanel;
     public String dataName;
     public Class dataClass;
-    public TreeItemDataPackage rootItem;
+    public TreeItem rootItem;
     
     @Override
     public void collapsePath(TreePath path) {
@@ -42,7 +43,7 @@ public abstract class DatabaseTreeBase extends TreeMenu{
     public int generateId(){
         int id = 1;
         List<Integer> allId = new ArrayList<Integer>();
-        makeAllIdList((DataEditorPackage) rootItem.editorData, allId);
+        makeAllIdList((DataEditorPackage) ((TreeItemDataPackage)rootItem).editorData, allId);
         
         /*
         List<TreeItem> items = getItems();
@@ -69,7 +70,7 @@ public abstract class DatabaseTreeBase extends TreeMenu{
         }
     }
     
-    public void setup(DatabasePanel dataPanel, String dataName, Class dataClass){
+    public void setup(DatabasePanel dataPanel, String dataName, String rootIconFilename, Class dataClass){
         this.dataPanel = dataPanel;
         this.dataName = dataName;
         this.dataClass = dataClass;
@@ -77,7 +78,7 @@ public abstract class DatabaseTreeBase extends TreeMenu{
         DataEditorPackage rootEditorData = null;
         
         String dataPrefix = DataInfos.getSavePrefixName(dataName);
-        File file = new File(ProjectMgr.getDataPath(dataName), dataPrefix + "Infos" + "." + AppMgr.getExtension("data file"));
+        File file = new File(ProjectManager.getDataPath(dataName), dataPrefix + "Infos" + "." + AppMgr.getExtension("data file"));
         if(file.exists()){
             rootEditorData = (DataEditorPackage) DataMgr.load(file.getAbsolutePath());
             //DataEditorMap rootMapEditorData = new DataEditorMap(0, "");
@@ -91,7 +92,7 @@ public abstract class DatabaseTreeBase extends TreeMenu{
             rootEditorData = new DataEditorPackage(-1, dataName);
         }
         
-        rootItem = new TreeItemDataPackage(this, dataName, "project_root.png", rootEditorData);
+        rootItem = new TreeItemDataPackage(this, dataName, rootIconFilename, rootEditorData);
         
         refresh();   
     }
@@ -102,7 +103,7 @@ public abstract class DatabaseTreeBase extends TreeMenu{
         rootItem.removeAllChildren();
         
         addTopLevelItem(rootItem);
-        refreshRec((DataEditorPackage) rootItem.editorData, rootItem);
+        refreshRec((DataEditorPackage) ((TreeItemDataPackage)rootItem).editorData, (TreeItemDataPackage)rootItem);
         setItemExpanded(rootItem, true);
         
     }
@@ -147,7 +148,7 @@ public abstract class DatabaseTreeBase extends TreeMenu{
         
         if(data == null){
             String dataPrefix = DataInfos.getSavePrefixName(dataName);
-            File file = new File(ProjectMgr.getDataPath(dataName), dataPrefix + dataItem.editorData.getIdName() + "." + AppMgr.getExtension("data file"));
+            File file = new File(ProjectManager.getDataPath(dataName), dataPrefix + dataItem.editorData.getIdName() + "." + AppMgr.getExtension("data file"));
             //System.out.println(file.getAbsolutePath());
             //File file = new File(ProjectMgr.getDataGamePath(), "Map" + dataItem.data.getIdName() + "." + AppMgr.getExtension("data file"));
             data =  (AbstractData) DataMgr.load(file.getAbsolutePath());
@@ -193,35 +194,8 @@ public abstract class DatabaseTreeBase extends TreeMenu{
     }
 
     
-    public void itemCollapsed(TreeItem item){
-        super.itemCollapsed(item);
-        
-        TreeItemDataPackage dataItem = (TreeItemDataPackage) item;
-        DataEditorPackage data = (DataEditorPackage) dataItem.editorData;
-        data.expanded = false;
-    }
-    
-    public void itemExpanded(TreeItem item){
-        super.itemExpanded(item);
-        
-        if(item instanceof TreeItemDataPackage){
-            TreeItemDataPackage dataItem = (TreeItemDataPackage) item;
-            DataEditorPackage data = (DataEditorPackage) dataItem.editorData;
-            data.expanded = true;
-        }
-
-        for(int i=0; i<item.getChildCount(); i++){
-            if(item.getChildAt(i) instanceof TreeItemDataPackage){
-                TreeItemDataPackage childItem = (TreeItemDataPackage) item.getChildAt(i);
-                if(((DataEditorPackage)childItem.editorData).expanded){
-                    setItemExpanded(childItem, true);
-                }
-            }
-        }
-    }
-    
     @Override
-    public void currentItemChanged(TreeItem newItem){
+    public void currentItemChanged(TreeItem newItem){        
         super.currentItemChanged(newItem);
         
         dataPanel.dataChanged(getGameData(newItem));

@@ -11,7 +11,5 @@ package lib.editor.widget.tree.interfaces;
 public interface TreeWithMenu {
     
     public void createMenu();
-    public void createMenuShortcut();
-    public void checkEnabledMenuAction();
     
 }

@@ -6,11 +6,11 @@ package lib.editor.widget.tree.tree;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTree;
 import javax.swing.tree.TreePath;
 import lib.editor.mgr.TransferMgr;
+import lib.editor.widget.menu.Menu;
 import lib.editor.widget.tree.interfaces.TreeWithMenu;
 import lib.editor.widget.tree.item.TreeItem;
 
@@ -24,8 +24,7 @@ public abstract class TreeMenu extends Tree implements TreeWithMenu{
     
     public TreeMenu(){
         super();
-        menu = new JPopupMenu();
-        menu.setLightWeightPopupEnabled(false);
+        menu = new Menu();
         
         addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -36,6 +35,9 @@ public abstract class TreeMenu extends Tree implements TreeWithMenu{
         
 	MouseAdapter ma = new MouseAdapter() {
 		private void myPopupEvent(MouseEvent e) {
+                    if(!canShowMenu()){
+                        return;
+                    }
 			int x = e.getX();
 			int y = e.getY();
 			JTree tree = (JTree)e.getSource();
@@ -50,21 +52,29 @@ public abstract class TreeMenu extends Tree implements TreeWithMenu{
 			//Object obj = path.getLastPathComponent();
 
 			//String label = "popup: " + obj.getTreeLabel();
-			checkEnabledMenuAction();
 			menu.show(tree, x, y);
 		}
 		public void mousePressed(MouseEvent e) {
-			if (e.isPopupTrigger()) myPopupEvent(e);
+                    if(!canShowMenu()){
+                        return;
+                    }
+                    if (e.isPopupTrigger()){
+                        myPopupEvent(e);
+                    }
 		}
 		public void mouseReleased(MouseEvent e) {
-			if (e.isPopupTrigger()) myPopupEvent(e);
+                    if(!canShowMenu()){
+                        return;
+                    }
+                    if (e.isPopupTrigger()){
+                        myPopupEvent(e);
+                    }
 		}
 	};
 
 	addMouseListener(ma);
         
         createMenu();
-        createMenuShortcut();
     }
     
     public void grabFocus(){
@@ -73,6 +83,10 @@ public abstract class TreeMenu extends Tree implements TreeWithMenu{
     
     public void currentItemChanged(TreeItem newItem){
         super.currentItemChanged(newItem);
-        checkEnabledMenuAction();
     }
+    
+    public boolean canShowMenu(){
+        return true;
+    }
+    
 }

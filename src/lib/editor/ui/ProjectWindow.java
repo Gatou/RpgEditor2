@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileSystemView;
-import lib.editor.mgr.ProjectMgr;
+import lib.editor.mgr.ProjectManager;
 import lib.editor.util.SwingUtil;
 
 /**
@@ -239,7 +239,7 @@ public class ProjectWindow extends Dialog {
     // End of variables declaration//GEN-END:variables
 
     public void ok() {
-        ProjectMgr.createNewProject(completePath());
+        ProjectManager.createNewProject(completePath());
         super.ok();
     }
 

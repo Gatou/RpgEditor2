@@ -4,8 +4,6 @@
  */
 package lib.editor.widget.tree.tree;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -20,8 +18,7 @@ import lib.editor.data.editor.DataEditorPackage;
 import lib.editor.data.game.AbstractData;
 import lib.editor.mgr.AppMgr;
 import lib.editor.mgr.DataMgr;
-import lib.editor.mgr.Mgr;
-import lib.editor.mgr.ProjectMgr;
+import lib.editor.mgr.ProjectManager;
 import lib.editor.mgr.SaveMgr;
 import lib.editor.ui.data.DatabasePanel;
 import lib.editor.widget.menu.MenuItem;
@@ -54,146 +51,71 @@ public class DatabaseTree extends  DatabaseTreeBase{
     public void createMenu() {
         
         
-        newDataItem = new MenuItem("New data", Mgr.icon.getSystemIcon("new_data.png", false), KeyStroke.getKeyStroke(KeyEvent.VK_INSERT, 0));
-        newDataItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
+        newDataItem = new MenuItem("New data", "new_data.png"){
+            public boolean isEnabled(){
+                return super.isEnabled() && !(getCurrentItem() instanceof TreeItemData);
+            }
+            
+            public void execute() {
+                if(!isEnabled()){ return; }
                 newData(false);
             }
-        });
+        };
         menu.add(newDataItem);
         
-        newPackageItem = new MenuItem("New package", Mgr.icon.getSystemIcon("new_package.png", false), KeyStroke.getKeyStroke(KeyEvent.VK_INSERT, 0));
-        newPackageItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
+        newPackageItem = new MenuItem("New package", "new_package.png"){
+            public boolean isEnabled(){
+                return super.isEnabled() && !(getCurrentItem() instanceof TreeItemData);
+            }
+            
+            public void execute() {
+                if(!isEnabled()){ return; }
                 newPackage(false);
             }
-        });
+        };
         menu.add(newPackageItem);
         
         menu.add(new JPopupMenu.Separator());
         
-        copyItem = new MenuItem("Copy", Mgr.icon.getSystemIcon("copy.png", false), KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK));
-        copyItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
+        copyItem = new MenuItem("Copy", "copy.png", KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK), "COPY", false, this){
+            public boolean isEnabled(){
+                return super.isEnabled() && getCurrentItem() != rootItem;
+            }
+            
+            public void execute() {
+                if(!isEnabled()){ return; }
                 copy();
             }
-        });
+        };
         menu.add(copyItem);
         
-        pasteItem = new MenuItem("Paste", Mgr.icon.getSystemIcon("paste.png", false), KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_MASK));
-        pasteItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
+        pasteItem = new MenuItem("Paste", "paste.png", KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_MASK), "PASTE", false, this){
+
+            public void paste() {
+                if(!isEnabled()){ return; }
                 paste();
             }
-        });
+        };
         menu.add(pasteItem);
         
-        deleteItem = new MenuItem("Delete", Mgr.icon.getSystemIcon("delete.png", false), KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
-        deleteItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
+        deleteItem = new MenuItem("Delete", "delete.png", KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "DELETE", false, this){
+            
+            public boolean isEnabled(){
+                return super.isEnabled() && getCurrentItem() != rootItem;
+            }
+            
+            public void execute() {
+                if(!isEnabled()){ return; }
                 delete();
             }
-        });
+        };
         menu.add(deleteItem);
+
     }
     
   
-    /*
-    public void createMenuShortcut() {
-        //new map
-        new Shortcut(this, KeyStroke.getKeyStroke(KeyEvent.VK_INSERT, 0), "NEW_MAP", false, 
-                new AbstractAction(){
-                    public void actionPerformed(ActionEvent e) {
-                        newData(false);
-                    }
-                });
-        //copy
-        new Shortcut(this, KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK), "COPY", false, 
-                new AbstractAction(){
-                    public void actionPerformed(ActionEvent e) {
-                        WidgetMgr.MAIN_WINDOW.copy();
-                    }
-                });
-
-        //paste
-        new Shortcut(this, KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_MASK), "PASTE", false, 
-                new AbstractAction(){
-                    public void actionPerformed(ActionEvent e) {
-                        WidgetMgr.MAIN_WINDOW.paste();
-                    }
-                });
-        //delete
-        new Shortcut(this, KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "DELETE", false, 
-                new AbstractAction(){
-                    public void actionPerformed(ActionEvent e) {
-                        WidgetMgr.MAIN_WINDOW.delete();
-                    }
-                });
-    }
-
-    public void checkEnabledMenuAction() {
-
-        
-        TreeItem item = getCurrentItem();
-        boolean enabled = item != null;
-        
-        newDataItem.setEnabled(enabled);
-        copyItem.setEnabled(enabled);
-        pasteItem.setEnabled(TransferMgr.isEditorDataPastable(DataEditorMap.class));
-        deleteItem.setEnabled(enabled);
-        
-        if(filter.isFiltering){
-            //newMapItem.setEnabled(false);
-            //pasteItem.setEnabled(false);
-            deleteItem.setEnabled(false);
-        }      
-        else if(item == rootItem){
-            copyItem.setEnabled(false);
-            deleteItem.setEnabled(false);
-        }
-        
-
-        WidgetMgr.MAIN_WINDOW.setActionEnabled("new map", newMapItem.isEnabled());
-        WidgetMgr.MAIN_WINDOW.setActionEnabled("cut", false);
-        WidgetMgr.MAIN_WINDOW.setActionEnabled("copy", copyItem.isEnabled());
-        WidgetMgr.MAIN_WINDOW.setActionEnabled("paste", pasteItem.isEnabled());
-        WidgetMgr.MAIN_WINDOW.setActionEnabled("delete", deleteItem.isEnabled());
-    }*/
-
-    @Override
-    public void createMenuShortcut() {
-    }
-
-    @Override
-    public void checkEnabledMenuAction() {
-        TreeItem item = getCurrentItem();
-        boolean enabled = item != null;
-        
-        newDataItem.setEnabled(enabled);
-        newPackageItem.setEnabled(enabled);
-        copyItem.setEnabled(enabled);
-        //pasteItem.setEnabled(TransferMgr.isEditorDataPastable(DataEditorBase.class));
-        pasteItem.setEnabled(false);
-        deleteItem.setEnabled(enabled);
-        
-        if(item instanceof TreeItemData){
-            newDataItem.setEnabled(false);
-            newPackageItem.setEnabled(false);
-        }
-        else if(item instanceof TreeItemDataPackage){
-            newDataItem.setEnabled(true);
-            newPackageItem.setEnabled(true);
-        }
-        
-        if(item == rootItem){
-            copyItem.setEnabled(false);
-            deleteItem.setEnabled(false);
-        }
-        
-    }
-    
     public void newData(boolean pastedData){
-        checkEnabledMenuAction();
+        //checkEnabledMenuAction();
         if(!newDataItem.isEnabled()){ return; }
         
         TreeItemDataPackage parentItem = (TreeItemDataPackage) getCurrentItem();
@@ -235,14 +157,14 @@ public class DatabaseTree extends  DatabaseTreeBase{
         
         //((PropertyPanel) WidgetMgr.INSPECTOR.panels.get("property")).focusNameTextField();
         
-        checkEnabledMenuAction();
+        //checkEnabledMenuAction();
         
         //SaveMgr.requestSaveEnabled();
         dataPanel.currentDataModified();
     }
     
     public void newPackage(boolean pastedData){
-        checkEnabledMenuAction();
+        //checkEnabledMenuAction();
         if(!newDataItem.isEnabled()){ return; }
         
         TreeItemDataPackage parentItem = (TreeItemDataPackage) getCurrentItem();
@@ -280,7 +202,7 @@ public class DatabaseTree extends  DatabaseTreeBase{
         
         //((PropertyPanel) WidgetMgr.INSPECTOR.panels.get("property")).focusNameTextField();
         
-        checkEnabledMenuAction();
+        //checkEnabledMenuAction();
         
         //SaveMgr.requestSaveEnabled();
         dataPanel.currentDataModified();
@@ -295,7 +217,7 @@ public class DatabaseTree extends  DatabaseTreeBase{
     }
     
     public void delete(){
-        checkEnabledMenuAction();
+        //checkEnabledMenuAction();
         if(!deleteItem.isEnabled()){ return; }
         
         TreeItemDataBase item = (TreeItemDataBase) getCurrentItem();
@@ -322,7 +244,7 @@ public class DatabaseTree extends  DatabaseTreeBase{
         //if(parentItem.ch)
         //setCurrentItem(rootItem);
         
-        checkEnabledMenuAction();
+        //checkEnabledMenuAction();
         
         SaveMgr.requestSaveEnabled();
         //dataPanel.currentDataModified();
@@ -336,7 +258,7 @@ public class DatabaseTree extends  DatabaseTreeBase{
         }
         else{
             String dataPrefix = DataInfos.getSavePrefixName(dataName);
-            File file = new File(ProjectMgr.getDataPath(dataName), dataPrefix + data.getIdName() + "." + AppMgr.getExtension("data file"));
+            File file = new File(ProjectManager.getDataPath(dataName), dataPrefix + data.getIdName() + "." + AppMgr.getExtension("data file"));
             file.delete();
         }
 
@@ -378,7 +300,7 @@ public class DatabaseTree extends  DatabaseTreeBase{
         for(TreeItemData dataItem : modifiedItems){
             //System.out.println(dataItem.editorData.name + " " + dataItem.data);
             if(dataItem.data != null){
-                File file = new File(ProjectMgr.getDataPath(dataName), dataPrefix + dataItem.editorData.getIdName() + "." + AppMgr.getExtension("data file"));
+                File file = new File(ProjectManager.getDataPath(dataName), dataPrefix + dataItem.editorData.getIdName() + "." + AppMgr.getExtension("data file"));
                 //System.out.println(file.getName());
                 DataMgr.dump(dataItem.data, file.getAbsolutePath());
                 //dataItem.data = null;
@@ -386,14 +308,39 @@ public class DatabaseTree extends  DatabaseTreeBase{
         }
         modifiedItems.clear();
         
-        DataEditorPackage rootEditorData = (DataEditorPackage) rootItem.editorData;
+        DataEditorPackage rootEditorData = (DataEditorPackage) ((TreeItemDataPackage)rootItem).editorData;
         
-        File file = new File(ProjectMgr.getDataPath(dataName), dataPrefix + "Infos" + "." + AppMgr.getExtension("data file"));
+        File file = new File(ProjectManager.getDataPath(dataName), dataPrefix + "Infos" + "." + AppMgr.getExtension("data file"));
         DataMgr.dump(rootEditorData, file.getAbsolutePath());
         
         
     }
     
 
+    public void itemCollapsed(TreeItem item){
+        super.itemCollapsed(item);
+        
+        TreeItemDataPackage dataItem = (TreeItemDataPackage) item;
+        DataEditorPackage data = (DataEditorPackage) dataItem.editorData;
+        data.expanded = false;
+    }
     
+    public void itemExpanded(TreeItem item){
+        super.itemExpanded(item);
+        
+        if(item instanceof TreeItemDataPackage){
+            TreeItemDataPackage dataItem = (TreeItemDataPackage) item;
+            DataEditorPackage data = (DataEditorPackage) dataItem.editorData;
+            data.expanded = true;
+        }
+
+        for(int i=0; i<item.getChildCount(); i++){
+            if(item.getChildAt(i) instanceof TreeItemDataPackage){
+                TreeItemDataPackage childItem = (TreeItemDataPackage) item.getChildAt(i);
+                if(((DataEditorPackage)childItem.editorData).expanded){
+                    setItemExpanded(childItem, true);
+                }
+            }
+        }
+    }
 }
